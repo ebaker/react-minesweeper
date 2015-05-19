@@ -34,9 +34,9 @@ module.exports = Sweeper = (function(){
     this.height = 10;
     this.width = 10;
     this.board = [];
+    this.bombs = [];
+    this.uncovered = [];
   };
-
-
 
   Sweeper.prototype.createBoard = function(height, width){
     var i, j;
@@ -51,6 +51,7 @@ module.exports = Sweeper = (function(){
     this.height = height;
     this.width = width;
     this.board = columns;
+    this.uncovered = [];
   };
   
   Sweeper.prototype.printBoard = function (){

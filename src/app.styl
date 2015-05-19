@@ -3,10 +3,21 @@ body
 
 $square_px = 25px
 $border_color = black
+$btn_bg = green
+$btn_font_color = white
 
-button
+.controls
   display block
   margin-bottom 10px
+  > .btn
+    background $btn_bg
+    border-radius 4px
+    color $btn_font_color
+    cursor pointer
+    box-sizing border-box
+    display inline-block
+    padding 4px 8px
+
 
 .board
   box-sizing border-box
@@ -15,6 +26,7 @@ button
   display inline-block
   > .row
     display block
+    height $square_px
     > .square
       box-sizing border-box
       border-top 1px solid $border_color
