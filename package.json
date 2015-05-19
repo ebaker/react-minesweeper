@@ -1,0 +1,19 @@
+{
+  "name": "reatct-minesweeper",
+  "version": "0.1.0",
+  "dependencies": {
+    "browserify": "^10.0.0",
+    "express": "^4.12.4",
+    "nib": "^1.1.0",
+    "react": "^0.13.2",
+    "stylus": "^0.51.1"
+  },
+  "devDependencies": {
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-nodemon": "^2.0.3",
+    "gulp-stylus": "^2.0.1",
+    "reactify": "^1.1.0",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}
