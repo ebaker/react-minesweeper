@@ -63,5 +63,5 @@ gulp.task('start', function () {
 });
 
 // The default task (called when we run `gulp` from cli)
-gulp.task('default', ['watch', 'css', 'js', 'copy']);
+gulp.task('default', ['watch', 'clean', 'css', 'js', 'copy']);
 gulp.task('build', ['clean', 'css', 'js', 'copy']);
