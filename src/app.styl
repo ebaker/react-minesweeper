@@ -1,2 +1,26 @@
 body
   font-family sans-serif
+
+$square_px = 25px
+$border_color = black
+
+button
+  display block
+  margin-bottom 10px
+
+.board
+  box-sizing border-box
+  border-right 1px solid $border_color
+  border-bottom 1px solid $border_color
+  display inline-block
+  > .row
+    display block
+    > .square
+      box-sizing border-box
+      border-top 1px solid $border_color
+      border-left 1px solid $border_color
+      display inline-block
+      height $square_px
+      text-align center
+      padding-top 4px
+      width $square_px
