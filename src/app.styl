@@ -2,6 +2,7 @@ body
   font-family sans-serif
 
 $square_px = 25px
+$empty_square_bg = #bbb
 $border_color = black
 $btn_bg = green
 $btn_font_color = white
@@ -34,5 +35,8 @@ $btn_font_color = white
       display inline-block
       height $square_px
       text-align center
-      padding-top 4px
+      line-height $square_px
+      vertical-align top
       width $square_px
+      &.empty
+        background $empty_square_bg

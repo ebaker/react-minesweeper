@@ -41,8 +41,10 @@ module.exports = Sweeper = (function(){
   Sweeper.prototype.createBoard = function(height, width){
     var i, j;
     var columns = [];
+    var uncovered = [];
     for (i = 0; i < height; i++){
       var row = [];
+      uncovered.push(row);
       for(j = 0; j < width; j++){
         row[j] = '0';
       }
@@ -51,7 +53,11 @@ module.exports = Sweeper = (function(){
     this.height = height;
     this.width = width;
     this.board = columns;
-    this.uncovered = [];
+    this.uncovered = uncovered;
+  };
+
+  Sweeper.prototype.uncover = function(y, x){
+    this.uncovered[y].push(x);
   };
   
   Sweeper.prototype.printBoard = function (){
