@@ -36,15 +36,19 @@ module.exports = Sweeper = (function(){
     this.board = [];
     this.bombs = [];
     this.uncovered = [];
+    this.clickCount = 0;
+    this.game = {};
+    console.log('sweeper init');
   };
 
   Sweeper.prototype.createBoard = function(height, width){
     var i, j;
     var columns = [];
-    var uncovered = [];
+    var that = this;
+    this.uncovered = [];
     for (i = 0; i < height; i++){
+      that.uncovered.push([]);
       var row = [];
-      uncovered.push(row);
       for(j = 0; j < width; j++){
         row[j] = '0';
       }
@@ -53,11 +57,38 @@ module.exports = Sweeper = (function(){
     this.height = height;
     this.width = width;
     this.board = columns;
-    this.uncovered = uncovered;
   };
 
   Sweeper.prototype.uncover = function(y, x){
-    this.uncovered[y].push(x);
+    var that = this;
+    var traverse = function(y, x){
+      if (that.uncovered[y].indexOf(x) > -1)
+        return;
+      that.uncovered[y].push(x);
+      if (that.board[y][x] == '*') {
+        that.game.ended = new Date();
+        return;
+      } // lose game
+      if (parseInt(that.board[y][x]) === 0){
+
+        var l, checkX, checkY, hintCount = 0;
+        var toCheck = [
+                        [1, 0], [0, 1],
+                        [1, 1], [-1, 0], 
+                        [0, -1], [-1, -1], 
+                        [-1, 1], [1, -1]
+                       ];
+        for (l = 0; l < toCheck.length; l++ ){
+          checkY = y + toCheck[l][0];
+          checkX = x + toCheck[l][1];
+          if (checkY >= 0 && checkY <= that.height - 1 
+              && checkX >= 0 && checkX <= that.width - 1){
+              traverse(checkY, checkX);
+          }
+        }
+      }     
+     };
+    traverse(y, x);
   };
   
   Sweeper.prototype.printBoard = function (){
@@ -113,6 +144,7 @@ module.exports = Sweeper = (function(){
         counter++;
       }
     }
+    this.game.started = new Date();
   };
   
   Sweeper.prototype.addHints = function(){
