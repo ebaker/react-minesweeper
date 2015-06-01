@@ -61,8 +61,13 @@ var App = React.createClass({
     else{
       if (!this.state.sweeper.game.started) return;
       sweeper.toggleFlag(y, x);
-      this.setState({sweeper: sweeper});
+      this.setState({sweeper: sweeper, isFlag: false});
     }
+  },
+  onFlagClick: function(e){
+    console.log('flag', e);
+    var toggle = !this.state.isFlag;
+    this.setState({isFlag: toggle});
   },
   handleKeyUp: function(e){
     if (e.keyCode != 16) return;
@@ -82,11 +87,17 @@ var App = React.createClass({
         icon = <i className='icon-emo-unhappy' />;
       }
     }
+    var flagsClassName = 'bombs';
+    if (this.state.isFlag){
+      flagsClassName = flagsClassName + ' active';
+    }
     return (
       <div>
         <h1>Minesweeper</h1>
         <div className='controls'>
-          <div className='bombs'>{this.state.sweeper.numFlags}</div>
+          <div className={flagsClassName} onClick={this.onFlagClick}>
+            {this.state.sweeper.numFlags}
+          </div>
           <div className='btn new' onClick={this.resetBoard}>{icon}</div>
           <div className='timer'>{this.state.timer}</div>
         </div>

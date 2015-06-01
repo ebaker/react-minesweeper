@@ -20,15 +20,20 @@ $counter_red = red
   > .bombs, >.timer
     background black
     box-sizing border-box
+    border 5px solid black
+    border-radius 6px
     color $counter_red
     display inline-block
     font-size 32px
-    padding 2px 4px
+    padding 0px 4px
     position absolute
+    width 80px
     &.bombs
       left 0
     &.timer
       right 0
+    &.active
+      border 5px solid yellow
   > .new
     background $btn_bg
     border 1px solid black

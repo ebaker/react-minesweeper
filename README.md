@@ -5,6 +5,8 @@
  - [x] timer
  - [x] flags
  - [ ] responsive
+ - [ ] change alerts to modals
+ - [ ] add settings modal
  - [ ] style review
 
 # rules architecture (sweeper API)
