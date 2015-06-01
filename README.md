@@ -1,9 +1,38 @@
 # todo
  - [x] make it so click 0 opens a bunch of squares
- - [ ] make sure 1st click isnt bomb (create board after)
- - [ ] see if you won/lost on click
+ - [x] make sure 1st click isnt bomb (create board after)
+ - [x] see if you won/lost on click
  - [ ] timer
  - [ ] mobile/responsive
+
+# rules architecture (sweeper API)
+## Public
+ - [x] startGame(y, x, numOfBombs)
+   - [x] resetBoard - createBoard
+   - [x] addBombsWithHints(bombCoords = [])
+     - [x] cannot use y, x being uncovered
+   - [x] uncover(y, x)
+   - [x] save start time
+ - [x] uncover(y, x)
+   - [x] if game hasnt started, start it
+   - [x] check if bomb, end game
+   - [x] check if # of squares == # of bomb (win)
+   - [x] traverse uncover
+ - board = [[]]
+   - [x] where undefined are hidden
+   - [x] values are stored as int
+   - [x] 0 shows uncovered
+ - placeFlag(y, x)
+   - check if hidden (undefined)
+   - else add flag (array or -1)
+ - [x] resetBoard(height, width)
+   - set all to undefined
+## Private
+ - [x] _board (contains all board values)
+## Web UI
+ - bomb count
+ - new game button
+ - timer incrementing
 
 # notes
  - http://www.minesweepers.org/clicking.asp

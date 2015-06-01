@@ -1,25 +1,41 @@
 body
   font-family sans-serif
-
+  > div
+    display inline-block
 
 $square_px = 25px
 $empty_square_bg = #bbb
 $flag_bg = yellow
 $border_color = black
-$btn_bg = green
-$btn_font_color = white
+$btn_bg = yellow
+$btn_font_color = black
+$counter_red = red
 
 .controls
   display block
   margin-bottom 10px
-  > .btn
+  position relative
+  text-align center
+  > .bombs
+    background black
+    box-sizing border-box
+    color $counter_red
+    display inline-block
+    font-size 32px
+    padding 2px 4px
+    position absolute
+    left 0
+  > .new
     background $btn_bg
-    border-radius 4px
+    border 1px solid black
+    border-radius 50%
     color $btn_font_color
     cursor pointer
     box-sizing border-box
     display inline-block
-    padding 4px 8px
+    padding-top 12px
+    height 44px
+    width 44px
 
 
 .board
