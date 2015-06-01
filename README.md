@@ -3,6 +3,7 @@
  - [x] make sure 1st click isnt bomb (create board after)
  - [x] see if you won/lost on click
  - [ ] timer
+ - [ ] flags
  - [ ] mobile/responsive
 
 # rules architecture (sweeper API)
@@ -26,13 +27,13 @@
    - check if hidden (undefined)
    - else add flag (array or -1)
  - [x] resetBoard(height, width)
-   - set all to undefined
+   - [x] set all to undefined
 ## Private
  - [x] _board (contains all board values)
 ## Web UI
- - bomb count
- - new game button
- - timer incrementing
+ - [x] bomb count
+ - [x] new game button
+ - [ ] timer incrementing
 
 # notes
  - http://www.minesweepers.org/clicking.asp
