@@ -14,6 +14,7 @@ var nib = require('nib');
 var paths = {
   css: ['src/*.styl'],
   app_js: ['./src/app.jsx'],
+  js: ['./src/*.js'],
   html: ['./src/index.html'],
   dest: './build'
 };
@@ -51,6 +52,7 @@ gulp.task('js', function() {
 // Rerun tasks whenever a file changes.
 gulp.task('watch', function() {
   gulp.watch(paths.css, ['css']);
+  gulp.watch(paths.js, ['js']);
   gulp.watch(paths.app_js, ['js']);
 });
  
