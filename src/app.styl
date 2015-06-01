@@ -5,6 +5,7 @@ body
 
 $square_px = 25px
 $empty_square_bg = #bbb
+$visible_square_bg = #f8f8f8
 $flag_bg = yellow
 $border_color = black
 $btn_bg = yellow
@@ -33,10 +34,16 @@ $counter_red = red
     cursor pointer
     box-sizing border-box
     display inline-block
-    padding-top 12px
+    font-size 18px
+    padding-top 10px
     height 44px
     width 44px
 
+$one_color = blue
+$two_color = green
+$three_color = red
+$four_color = purple
+$bomb_bg = pink
 
 .board
   box-sizing border-box
@@ -47,9 +54,11 @@ $counter_red = red
     display block
     height $square_px
     > .square
+      background $visible_square_bg
       box-sizing border-box
       border-top 1px solid $border_color
       border-left 1px solid $border_color
+      color black
       display inline-block
       height $square_px
       text-align center
@@ -62,3 +71,13 @@ $counter_red = red
         background $empty_square_bg
       &.flag
         background $flag_bg
+      &.bomb
+        background $bomb_bg
+      &._1
+        color $one_color
+      &._2
+        color $two_color
+      &._3
+        color $three_color
+      &._4
+        color $four_color

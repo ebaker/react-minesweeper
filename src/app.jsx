@@ -55,12 +55,18 @@ var App = React.createClass({
   },
   render: function() {
     console.log('sweeper', this.state.sweeper);
+    var icon = <i className='icon-emo-happy' />;
+    if (this.state.sweeper.game.ended){
+      if (this.state.sweeper.game.status === 'lost'){
+        icon = <i className='icon-emo-unhappy' />;
+      }
+    }
     return (
       <div>
         <h1>Minesweeper</h1>
         <div className='controls'>
           <div className='bombs'>{this.state.sweeper.numOfBombs}</div>
-          <div className='btn new' onClick={this.resetBoard}>GO</div>
+          <div className='btn new' onClick={this.resetBoard}>{icon}</div>
         </div>
         <Board 
           sweeper={this.state.sweeper} 
@@ -121,7 +127,18 @@ var Square = React.createClass({
       />
     );
     if (this.props.value != undefined){
-      square = <div key={key} className='square'>{this.props.value}</div>;
+      var value = this.props.value > 0 ? this.props.value : '';
+      var className = 'square _' + value;
+      var inner = value;
+      if (this.props.value === '*'){
+        className = className + ' bomb';
+        inner = <i className='icon-bomb' />
+      }
+      square = (
+        <div key={key} className={className}>
+          {inner}
+        </div>
+      );
     }
     return square;
   }
