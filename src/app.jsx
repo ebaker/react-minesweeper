@@ -9,7 +9,7 @@ var App = React.createClass({
       sweeper: sweeper,
       isFlag: false,
       timer: 0
-      };
+    };
   },
   componentDidMount: function(){
     window.addEventListener('keydown', this.handleKeyDown);
@@ -60,7 +60,6 @@ var App = React.createClass({
     }
     else{
       if (!this.state.sweeper.game.started) return;
-      console.log('toogleflag');
       sweeper.toggleFlag(y, x);
       this.setState({sweeper: sweeper});
     }
@@ -69,16 +68,14 @@ var App = React.createClass({
     if (e.keyCode != 16) return;
     e.preventDefault();
     this.setState({isFlag: false});
-    console.log('up', e);
   },
   handleKeyDown: function(e){
     if (e.keyCode != 16) return;
     e.preventDefault();
     this.setState({isFlag: true});
-    console.log('down', e);
   },
   render: function() {
-    console.log('sweeper', this.state.sweeper);
+    // console.log('sweeper', this.state.sweeper);
     var icon = <i className='icon-emo-happy' />;
     if (this.state.sweeper.game.ended){
       if (this.state.sweeper.game.status === 'lost'){
