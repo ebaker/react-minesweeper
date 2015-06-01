@@ -36,6 +36,7 @@ module.exports = Sweeper = (function(){
     this.height = height || 10;
     this.width = width || 10;
     this.numOfBombs = numOfBombs || 5;
+    this.numFlags = this.numOfBombs;
     this.board = [];
     this.bombs = [];
     this.uncoveredCount = 0;
@@ -69,6 +70,18 @@ module.exports = Sweeper = (function(){
       }
     }
     return bombs;
+  };
+
+  Sweeper.prototype.toggleFlag = function(y, x){
+    if (this.board[y][x] === undefined){
+      if (this.numFlags < 1) return;
+      this.board[y][x] = -1;
+      this.numFlags--;
+    }
+    else if (this.board[y][x] === -1){
+      this.board[y][x] = undefined;
+      this.numFlags++;
+    }
   };
 
   Sweeper.prototype.uncover = function(y, x){
@@ -163,6 +176,7 @@ module.exports = Sweeper = (function(){
     this.height = height || this.height;
     this.width = width || this.width;
     this.numOfBombs = numOfBombs || this.numOfBombs;
+    this.numFlags = this.numOfBombs;
     this._board = [];
     this.board = [];
     this.game = {};

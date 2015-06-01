@@ -58,9 +58,16 @@ var App = React.createClass({
         }
       }
     }
+    else{
+      if (!this.state.sweeper.game.started) return;
+      console.log('toogleflag');
+      sweeper.toggleFlag(y, x);
+      this.setState({sweeper: sweeper});
+    }
   },
   handleKeyUp: function(e){
     if (e.keyCode != 16) return;
+    e.preventDefault();
     this.setState({isFlag: false});
     console.log('up', e);
   },
@@ -82,7 +89,7 @@ var App = React.createClass({
       <div>
         <h1>Minesweeper</h1>
         <div className='controls'>
-          <div className='bombs'>{this.state.sweeper.numOfBombs}</div>
+          <div className='bombs'>{this.state.sweeper.numFlags}</div>
           <div className='btn new' onClick={this.resetBoard}>{icon}</div>
           <div className='timer'>{this.state.timer}</div>
         </div>
@@ -152,8 +159,12 @@ var Square = React.createClass({
         className = className + ' bomb';
         inner = <i className='icon-bomb' />
       }
+      else if (this.props.value === -1){
+        className = className + ' flag';
+        inner = <i className='icon-flag' />
+      }
       square = (
-        <div key={key} className={className}>
+        <div key={key} className={className} onClick={this.handleClick}>
           {inner}
         </div>
       );
