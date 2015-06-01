@@ -1,5 +1,5 @@
 {
-  "name": "reatct-minesweeper",
+  "name": "react-minesweeper",
   "version": "0.1.0",
   "dependencies": {
     "browserify": "^10.0.0",
@@ -13,7 +13,11 @@
     "gulp": "^3.8.11",
     "gulp-nodemon": "^2.0.3",
     "gulp-stylus": "^2.0.1",
+    "mocha": "^2.2.5",
     "reactify": "^1.1.0",
     "vinyl-source-stream": "^1.1.0"
+  },
+  "scripts": {
+    "test": "node test/mocha/node-suite.js"
   }
 }
