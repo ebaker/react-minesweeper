@@ -37,4 +37,11 @@ describe('sweeper', function() {
       assert.equal(square < max, true, 'square greater than max');
     });
   });
+  it('add bombs with hints', function(){
+    var bombs = [1];
+    var checkBoard = [[1, '*'], [1, 1]];
+    sweeper.resetBoard(2, 2);
+    sweeper.addBombsWithHints(bombs);
+    assert.deepEqual(sweeper._board, checkBoard, '2x2 one bomb added');
+  });
 });

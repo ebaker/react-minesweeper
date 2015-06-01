@@ -25,25 +25,30 @@
 //  - cleanup console log
 //  - add tests for non random numbers
 
+//var console = require('console-browserify');
 
 module.exports = Sweeper = (function(){
 
-  function Sweeper(height, width) {
+  function Sweeper(height, width, numOfBombs) {
     if (!(this instanceof Sweeper)) {
       return new Sweeper();
     }
     this.height = height || 10;
     this.width = width || 10;
+    this.numOfBombs = numOfBombs || 5;
     this.board = [];
     this.bombs = [];
-    this.uncovered = [];
+    this.uncoveredCount = 0;
     this.clickCount = 0;
     this.game = {};
-    console.log('sweeper init');
   };
 
-  Sweeper.prototype.startGame = function(y, x, numOfBombs){
+  Sweeper.prototype.startGame = function(y, x){
     this.resetBoard();    
+    var bombs = this.genRandSquares([y, x], this.numOfBombs)
+    this.addBombsWithHints(bombs);
+    this.game.started = new Date();
+    this.uncover(y, x);
   };
 
   Sweeper.prototype.genRandSquares = function (excludeCoord, numSquaresOut){
@@ -66,35 +71,21 @@ module.exports = Sweeper = (function(){
     return bombs;
   };
 
-  Sweeper.prototype.createBoard = function(height, width){
-    var i, j;
-    var columns = [];
-    var that = this;
-    this.uncovered = [];
-    for (i = 0; i < height; i++){
-      that.uncovered.push([]);
-      var row = [];
-      for(j = 0; j < width; j++){
-        row[j] = '0';
-      }
-      columns.push(row);
-    }
-    this.height = height;
-    this.width = width;
-    this.board = columns;
-  };
-
   Sweeper.prototype.uncover = function(y, x){
+    if (!this.game.started){
+      this.startGame(y, x);
+    }
     var that = this;
     var traverse = function(y, x){
-      if (that.uncovered[y].indexOf(x) > -1)
+      if (that.board[y][x] != undefined)
         return;
-      that.uncovered[y].push(x);
+      that.board[y][x] = that._board[y][x];
+      that.uncoveredCount++;
       if (that.board[y][x] == '*') {
         that.game.ended = new Date();
         return;
       } // lose game
-      if (parseInt(that.board[y][x]) === 0){
+      if (that.board[y][x] === 0){
 
         var l, checkX, checkY, hintCount = 0;
         var toCheck = [
@@ -114,6 +105,14 @@ module.exports = Sweeper = (function(){
       }     
      };
     traverse(y, x);
+    var remaining = this.height * this.width - this.uncoveredCount;
+    if (that.game.ended){
+      return false;
+    }
+    if (this.numOfBombs === remaining){
+      that.game.ended = new Date();
+    }
+    return true;
   };
   
   Sweeper.prototype.printBoard = function (){
@@ -123,15 +122,14 @@ module.exports = Sweeper = (function(){
     }
   };
   
-  Sweeper.prototype.addBombs = function (numOfBombs){
-    var bombs = this.genRandSquares([0,0], numOfBombs);
+  Sweeper.prototype.addBombsWithHints = function (bombs){
     var i, j, counter = 0;
   
     // Add bombs and hints
-    for (i = 0; i < this.board.length; i++){
-      for(j = 0; j < this.board[i].length; j++){
+    for (i = 0; i < this._board.length; i++){
+      for(j = 0; j < this._board[i].length; j++){
         if (bombs.indexOf(counter) > -1){
-          this.board[i][j] = '*';
+          this._board[i][j] = '*';
           var l, checkX, checkY, hintCount = 0;
           var toCheck = [
                           [1, 0], [0, 1],
@@ -144,10 +142,10 @@ module.exports = Sweeper = (function(){
             checkX = j + toCheck[l][1];
             if (checkY >= 0 && checkY <= this.height - 1 
                 && checkX >= 0 && checkX <= this.width - 1){
-              if (this.board[checkY][checkX] != '*'){
-                var hint = parseInt(this.board[checkY][checkX]);
+              if (this._board[checkY][checkX] != '*'){
+                var hint = this._board[checkY][checkX];
                 hint++;
-                this.board[checkY][checkX] = hint.toString();
+                this._board[checkY][checkX] = hint;
               }
             }
           }
@@ -155,22 +153,25 @@ module.exports = Sweeper = (function(){
         counter++;
       }
     }
-    this.game.started = new Date();
   };
 
-  Sweeper.prototype.resetBoard = function(height, width){
+  Sweeper.prototype.resetBoard = function(height, width, numOfBombs){
     var y, x;
     this.height = height || this.height;
     this.width = width || this.width;
+    this.numOfBombs = numOfBombs || this.numOfBombs;
     this._board = [];
     this.board = [];
+    this.game = {};
+    this.uncoveredCount = 0;
     var that = this;
     for (y = 0; y < this.height; y++){
-      var row = [];
+      var row = [], rowZero = [];
       for (x = 0; x < this.width; x++){
         row.push(undefined);
+        rowZero.push(0);
       }
-      that._board.push(row);
+      that._board.push(rowZero);
       that.board.push(row);
     }
   };
