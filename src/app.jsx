@@ -108,6 +108,7 @@ var Board = React.createClass({
     for (y = 0; y < this.props.sweeper.board.length; y++){
       board.push(
         <Row 
+          key={y}
           y={y} 
           row={this.props.sweeper.board[y]} 
           width={this.props.sweeper.width}
@@ -124,7 +125,8 @@ var Row = React.createClass({
     var x, row = [];
       for (x = 0; x < this.props.width; x++){
         row.push(
-          <Square 
+          <Square
+            key={x}
             x={x}
             y={this.props.y}
             value={this.props.row[x]} 
