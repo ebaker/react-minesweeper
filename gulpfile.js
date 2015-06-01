@@ -9,6 +9,7 @@ var source = require('vinyl-source-stream');
 var stylus = require('gulp-stylus');  // To compile Stylus CSS.
 var nodemon = require('gulp-nodemon');
 var nib = require('nib');
+var fontello = require('gulp-fontello');
  
 // Define some paths.
 var paths = {
@@ -16,6 +17,7 @@ var paths = {
   app_js: ['./src/app.jsx'],
   js: ['./src/*.js'],
   html: ['./src/index.html'],
+  fontello: './src/fontello.json',
   dest: './build'
 };
  
@@ -38,6 +40,13 @@ gulp.task('css', function() {
     .pipe(stylus({use: [nib()]}))
     .pipe(gulp.dest(paths.dest + '/css'));
 });
+
+// Fontello
+gulp.task('fontello', function(){
+  return gulp.src(paths.fontello)
+    .pipe(fontello())
+    .pipe(gulp.dest(paths.dest + '/font'))
+});
  
 // Our JS task. It will Browserify our code and compile React JSX files.
 gulp.task('js', function() {
@@ -52,6 +61,7 @@ gulp.task('js', function() {
 // Rerun tasks whenever a file changes.
 gulp.task('watch', function() {
   gulp.watch(paths.css, ['css']);
+  gulp.watch(paths.fontello, ['fontello']);
   gulp.watch(paths.js, ['js']);
   gulp.watch(paths.app_js, ['js']);
 });
@@ -65,5 +75,5 @@ gulp.task('start', function () {
 });
 
 // The default task (called when we run `gulp` from cli)
-gulp.task('default', ['watch', 'clean', 'css', 'js', 'copy']);
-gulp.task('build', ['clean', 'css', 'js', 'copy']);
+gulp.task('default', ['watch', 'clean', 'css', 'fontello', 'js', 'copy']);
+gulp.task('build', ['clean', 'css', 'fontello', 'js', 'copy']);
