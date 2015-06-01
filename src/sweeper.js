@@ -25,20 +25,45 @@
 //  - cleanup console log
 //  - add tests for non random numbers
 
+
 module.exports = Sweeper = (function(){
 
-  function Sweeper() {
+  function Sweeper(height, width) {
     if (!(this instanceof Sweeper)) {
       return new Sweeper();
     }
-    this.height = 10;
-    this.width = 10;
+    this.height = height || 10;
+    this.width = width || 10;
     this.board = [];
     this.bombs = [];
     this.uncovered = [];
     this.clickCount = 0;
     this.game = {};
     console.log('sweeper init');
+  };
+
+  Sweeper.prototype.startGame = function(y, x, numOfBombs){
+    this.resetBoard();    
+  };
+
+  Sweeper.prototype.genRandSquares = function (excludeCoord, numSquaresOut){
+    var numOfSquares = this.height * this.width
+    if (numSquaresOut > numOfSquares - 1) return [];
+
+    var i, j, counter = 0, bombs = [];
+    var excludeSquare = excludeCoord[0] * this.height + excludeCoord[1];
+    for (i = 0; i < numSquaresOut; i++){
+      var passed = false;
+      while (!passed){
+        var bomb = Math.floor(Math.random() * (numOfSquares - 1) );
+        if (bombs.indexOf(bomb) < 0  
+            && (bomb != excludeSquare)) {
+          bombs.push(bomb);
+          break;
+        }
+      }
+    }
+    return bombs;
   };
 
   Sweeper.prototype.createBoard = function(height, width){
@@ -99,22 +124,8 @@ module.exports = Sweeper = (function(){
   };
   
   Sweeper.prototype.addBombs = function (numOfBombs){
-    var numOfSquares = this.height * this.width;
-    if (numOfBombs > numOfSquares) return false;
-    var height = this.height;
-    var width = this.width;
-    var bombs = [];
+    var bombs = this.genRandSquares([0,0], numOfBombs);
     var i, j, counter = 0;
-    for (i = 0; i < numOfBombs; i++){
-      var passed = false;
-      while (!passed){
-        var bomb = Math.floor(Math.random() * (numOfSquares - 1) );
-        if (bombs.indexOf(bomb) < 0) {
-          bombs.push(bomb);
-          break;
-        }
-      }
-    }
   
     // Add bombs and hints
     for (i = 0; i < this.board.length; i++){
@@ -131,8 +142,8 @@ module.exports = Sweeper = (function(){
           for (l = 0; l < toCheck.length; l++ ){
             checkY = i + toCheck[l][0];
             checkX = j + toCheck[l][1];
-            if (checkY >= 0 && checkY <= height - 1 
-                && checkX >= 0 && checkX <= width - 1){
+            if (checkY >= 0 && checkY <= this.height - 1 
+                && checkX >= 0 && checkX <= this.width - 1){
               if (this.board[checkY][checkX] != '*'){
                 var hint = parseInt(this.board[checkY][checkX]);
                 hint++;
@@ -145,6 +156,27 @@ module.exports = Sweeper = (function(){
       }
     }
     this.game.started = new Date();
+  };
+
+  Sweeper.prototype.resetBoard = function(height, width){
+    var y, x;
+    this.height = height || this.height;
+    this.width = width || this.width;
+    this._board = [];
+    this.board = [];
+    var that = this;
+    for (y = 0; y < this.height; y++){
+      var row = [];
+      for (x = 0; x < this.width; x++){
+        row.push(undefined);
+      }
+      that._board.push(row);
+      that.board.push(row);
+    }
+  };
+
+  Sweeper.prototype.smokeTest = function(){
+    return 'smoke test';
   };
   
   return Sweeper;
