@@ -1,14 +1,22 @@
 var Sweeper = require('./sweeper');
+var React = require('react');
 
 var App = React.createClass({
   getInitialState: function() {
     return {
-      sweeper: new Sweeper()
+      sweeper: new Sweeper(),
+      isFlag: false
       };
   },
   componentDidMount: function(){
     console.log('sweeper', this.state.sweeper);
+    window.addEventListener('keydown', this.handleKeyDown);
+    window.addEventListener('keyup', this.handleKeyUp);
     return this.startNewGame();
+  },
+  componentWillUnmount: function(){
+    window.removeEventListener('keydown');
+    window.removeEventListener('keyup');
   },
   startNewGame: function(){
     var sweeper = this.state.sweeper;
@@ -18,9 +26,22 @@ var App = React.createClass({
   },
   handleTileClick: function(y, x){
     var sweeper = this.state.sweeper;
-    sweeper.uncover(y,x);
-    console.log('tile click', y, x);
-    this.setState({sweeper: sweeper});
+    if (!this.state.isFlag){
+      sweeper.uncover(y,x);
+      console.log('tile click', y, x);
+      this.setState({sweeper: sweeper});
+    }
+  },
+  handleKeyUp: function(e){
+    if (e.keyCode != 16) return;
+    this.setState({isFlag: false});
+    console.log('up', e);
+  },
+  handleKeyDown: function(e){
+    if (e.keyCode != 16) return;
+    e.preventDefault();
+    this.setState({isFlag: true});
+    console.log('down', e);
   },
   render: function() {
     return (
@@ -29,7 +50,10 @@ var App = React.createClass({
         <div className='controls'>
           <div className='btn new' onClick={this.startNewGame}>New</div>
         </div>
-        <Board sweeper={this.state.sweeper} squareCallback={this.handleTileClick} />
+        <Board 
+          sweeper={this.state.sweeper} 
+          squareCallback={this.handleTileClick} 
+        />
       </div>
     );
   }
@@ -41,7 +65,8 @@ var Board = React.createClass({
     console.log('board', this.props.sweeper);
     for (y = 0; y < this.props.sweeper.board.length; y++){
       board.push(
-        <Row y={y} 
+        <Row 
+          y={y} 
           row={this.props.sweeper.board[y]} 
           width={this.props.sweeper.width}
           uncovered={this.props.sweeper.uncovered} 
@@ -72,8 +97,14 @@ var Row = React.createClass({
 });
 
 var Square = React.createClass({
-  handleClick: function(){
+  handleClick: function(e){
+    console.log('click', e);
     this.props.squareCallback(this.props.y, this.props.x);
+  },
+  onMouseDown: function(e){
+    console.log('mousedown', e);
+    if (e.button !== 0) return;
+    else console.log('button', e.button);
   },
   render: function(){
     var key = this.props.y+'_'+this.props.x;
