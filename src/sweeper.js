@@ -115,8 +115,8 @@ module.exports = Sweeper = (function(){
         }
       }
     }
-    //console.log('bombs', bombs);
   
+    // Add bombs and hints
     for (i = 0; i < this.board.length; i++){
       for(j = 0; j < this.board[i].length; j++){
         if (bombs.indexOf(counter) > -1){
@@ -128,56 +128,25 @@ module.exports = Sweeper = (function(){
                           [0, -1], [-1, -1], 
                           [-1, 1], [1, -1]
                          ];
-            for (l = 0; l < toCheck.length; l++ ){
-              checkY = i + toCheck[l][0];
-              checkX = j + toCheck[l][1];
-              if (checkY >= 0 && checkY <= height - 1 
-                  && checkX >= 0 && checkX <= width - 1){
-                  if (this.board[checkY][checkX] != '*'){
-                    var hint = parseInt(this.board[checkY][checkX]);
-                    hint++;
-                    this.board[checkY][checkX] = hint.toString();
-                  }
+          for (l = 0; l < toCheck.length; l++ ){
+            checkY = i + toCheck[l][0];
+            checkX = j + toCheck[l][1];
+            if (checkY >= 0 && checkY <= height - 1 
+                && checkX >= 0 && checkX <= width - 1){
+              if (this.board[checkY][checkX] != '*'){
+                var hint = parseInt(this.board[checkY][checkX]);
+                hint++;
+                this.board[checkY][checkX] = hint.toString();
               }
             }
-       }
+          }
+        }
         counter++;
       }
     }
     this.game.started = new Date();
   };
   
-  Sweeper.prototype.addHints = function(){
-    var i, j;
-    for (i = 0; i < this.board.length; i++){
-      var row = [];
-      for(j = 0; j < this.board[i].length; j++){
-        if (this.board[i][j] != '*'){
-          var findHintValue = function (y, x){
-            var l, checkX, checkY, hintCount = 0;
-            var toCheck = [[1, 0], [0, 1], [1, 1], [-1, 0], [0, -1], [-1, -1], [-1, 1], [1, -1]];
-            for (l = 0; l < toCheck.length; l++ ){
-              checkY = y + toCheck[l][0];
-              checkX = x + toCheck[l][1];
-  
-              // bounds check
-              if (checkY >= 0 && checkY <= this.board.length - 1 && checkX >= 0 && checkX <= this.board[0].length - 1){
-                // console.log('where i am now', y, x)
-                // console.log('before', checkY, checkX);
-                // console.log('checking', this.board[checkY][checkX]);
-                if (this.board[checkY][checkX] === '*'){
-                  hintCount++;
-                }
-              }
-            }
-            return hintCount;
-          }
-          this.board[i][j] = findHintValue(i, j);
-        }
-      }
-    }
-  };
-
   return Sweeper;
 })();
 
