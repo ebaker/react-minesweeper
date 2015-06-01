@@ -1,2 +1,48 @@
 body
   font-family sans-serif
+
+
+$square_px = 25px
+$empty_square_bg = #bbb
+$flag_bg = yellow
+$border_color = black
+$btn_bg = green
+$btn_font_color = white
+
+.controls
+  display block
+  margin-bottom 10px
+  > .btn
+    background $btn_bg
+    border-radius 4px
+    color $btn_font_color
+    cursor pointer
+    box-sizing border-box
+    display inline-block
+    padding 4px 8px
+
+
+.board
+  box-sizing border-box
+  border-right 1px solid $border_color
+  border-bottom 1px solid $border_color
+  display inline-block
+  > .row
+    display block
+    height $square_px
+    > .square
+      box-sizing border-box
+      border-top 1px solid $border_color
+      border-left 1px solid $border_color
+      display inline-block
+      height $square_px
+      text-align center
+      line-height $square_px
+      vertical-align top
+      width $square_px
+      ::selection
+        background transparent
+      &.empty
+        background $empty_square_bg
+      &.flag
+        background $flag_bg
