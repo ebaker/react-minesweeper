@@ -3,8 +3,9 @@
  - [x] make sure 1st click isnt bomb (create board after)
  - [x] see if you won/lost on click
  - [x] timer
- - [ ] flags
- - [ ] mobile/responsive
+ - [x] flags
+ - [ ] responsive
+ - [ ] style review
 
 # rules architecture (sweeper API)
 ## Public

@@ -9,7 +9,7 @@ var App = React.createClass({
       sweeper: sweeper,
       isFlag: false,
       timer: 0
-      };
+    };
   },
   componentDidMount: function(){
     window.addEventListener('keydown', this.handleKeyDown);
@@ -58,20 +58,24 @@ var App = React.createClass({
         }
       }
     }
+    else{
+      if (!this.state.sweeper.game.started) return;
+      sweeper.toggleFlag(y, x);
+      this.setState({sweeper: sweeper});
+    }
   },
   handleKeyUp: function(e){
     if (e.keyCode != 16) return;
+    e.preventDefault();
     this.setState({isFlag: false});
-    console.log('up', e);
   },
   handleKeyDown: function(e){
     if (e.keyCode != 16) return;
     e.preventDefault();
     this.setState({isFlag: true});
-    console.log('down', e);
   },
   render: function() {
-    console.log('sweeper', this.state.sweeper);
+    // console.log('sweeper', this.state.sweeper);
     var icon = <i className='icon-emo-happy' />;
     if (this.state.sweeper.game.ended){
       if (this.state.sweeper.game.status === 'lost'){
@@ -82,7 +86,7 @@ var App = React.createClass({
       <div>
         <h1>Minesweeper</h1>
         <div className='controls'>
-          <div className='bombs'>{this.state.sweeper.numOfBombs}</div>
+          <div className='bombs'>{this.state.sweeper.numFlags}</div>
           <div className='btn new' onClick={this.resetBoard}>{icon}</div>
           <div className='timer'>{this.state.timer}</div>
         </div>
@@ -101,6 +105,7 @@ var Board = React.createClass({
     for (y = 0; y < this.props.sweeper.board.length; y++){
       board.push(
         <Row 
+          key={y}
           y={y} 
           row={this.props.sweeper.board[y]} 
           width={this.props.sweeper.width}
@@ -117,7 +122,8 @@ var Row = React.createClass({
     var x, row = [];
       for (x = 0; x < this.props.width; x++){
         row.push(
-          <Square 
+          <Square
+            key={x}
             x={x}
             y={this.props.y}
             value={this.props.row[x]} 
@@ -152,8 +158,12 @@ var Square = React.createClass({
         className = className + ' bomb';
         inner = <i className='icon-bomb' />
       }
+      else if (this.props.value === -1){
+        className = className + ' flag';
+        inner = <i className='icon-flag' />
+      }
       square = (
-        <div key={key} className={className}>
+        <div key={key} className={className} onClick={this.handleClick}>
           {inner}
         </div>
       );
