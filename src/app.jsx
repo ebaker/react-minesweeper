@@ -31,15 +31,13 @@ var App = React.createClass({
         this.setState({sweeper: sweeper});
       }
       else {
-        var uncovered = sweeper.uncover(y,x);
+        var game = sweeper.uncover(y,x);
         this.setState({sweeper: sweeper});
-        if (sweeper.game.ended){
-          if (uncovered === false){
-            alert('game lost');
-          } 
-          else{
-            alert('game won');
-          }
+         if (game){
+          var msg = 'game ' + game.status;
+          setTimeout(function(){
+            alert(msg);
+          }, 100);
         }
       }
     }

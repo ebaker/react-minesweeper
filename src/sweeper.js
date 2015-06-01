@@ -107,12 +107,15 @@ module.exports = Sweeper = (function(){
     traverse(y, x);
     var remaining = this.height * this.width - this.uncoveredCount;
     if (that.game.ended){
-      return false;
+      that.game.status = 'lost';
+      return that.game;
     }
     if (this.numOfBombs === remaining){
       that.game.ended = new Date();
+      that.game.status = 'won';
+      return that.game
     }
-    return true;
+    return undefined;
   };
   
   Sweeper.prototype.printBoard = function (){
