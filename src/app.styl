@@ -17,7 +17,7 @@ $counter_red = red
   margin-bottom 10px
   position relative
   text-align center
-  > .bombs
+  > .bombs, >.timer
     background black
     box-sizing border-box
     color $counter_red
@@ -25,7 +25,10 @@ $counter_red = red
     font-size 32px
     padding 2px 4px
     position absolute
-    left 0
+    &.bombs
+      left 0
+    &.timer
+      right 0
   > .new
     background $btn_bg
     border 1px solid black
@@ -34,7 +37,7 @@ $counter_red = red
     cursor pointer
     box-sizing border-box
     display inline-block
-    font-size 18px
+    font-size 20px
     padding-top 10px
     height 44px
     width 44px

@@ -7,7 +7,8 @@ var App = React.createClass({
     sweeper.resetBoard();
     return {
       sweeper: sweeper,
-      isFlag: false
+      isFlag: false,
+      timer: 0
       };
   },
   componentDidMount: function(){
@@ -19,15 +20,31 @@ var App = React.createClass({
     window.removeEventListener('keyup');
   },
   resetBoard: function(y, x){
+    if (this.state.timeoutId){
+      clearTimeout(this.state.timeoutId);
+      this.setState({timeoutId: undefined});
+    }
     var sweeper = this.state.sweeper;
     sweeper.resetBoard();
-    this.setState({sweeper: sweeper});
+    this.setState({sweeper: sweeper, timer: 0});
+  },
+  startTimer: function() {
+    var that = this;
+    var tick = function() {
+      if (!that.state.sweeper.game.ended){
+        that.setState({timer: that.state.timer + 1});
+        var timeoutId = setTimeout(tick, 1000);
+        that.setState({timeoutId: timeoutId});
+      }
+    };
+    tick();
   },
   handleTileClick: function(y, x){
     var sweeper = this.state.sweeper;
     if (!this.state.isFlag){
       if (!this.state.sweeper.game.started || this.state.sweeper.game.ended){
         sweeper.startGame(y, x);
+        this.startTimer();    
         this.setState({sweeper: sweeper});
       }
       else {
@@ -67,6 +84,7 @@ var App = React.createClass({
         <div className='controls'>
           <div className='bombs'>{this.state.sweeper.numOfBombs}</div>
           <div className='btn new' onClick={this.resetBoard}>{icon}</div>
+          <div className='timer'>{this.state.timer}</div>
         </div>
         <Board 
           sweeper={this.state.sweeper} 

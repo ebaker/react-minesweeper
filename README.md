@@ -2,7 +2,7 @@
  - [x] make it so click 0 opens a bunch of squares
  - [x] make sure 1st click isnt bomb (create board after)
  - [x] see if you won/lost on click
- - [ ] timer
+ - [x] timer
  - [ ] flags
  - [ ] mobile/responsive
 
@@ -33,7 +33,7 @@
 ## Web UI
  - [x] bomb count
  - [x] new game button
- - [ ] timer incrementing
+ - [x] timer incrementing
 
 # notes
  - http://www.minesweepers.org/clicking.asp
