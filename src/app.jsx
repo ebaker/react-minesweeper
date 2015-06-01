@@ -8,7 +8,8 @@ var App = React.createClass({
     return {
       sweeper: sweeper,
       isFlag: false,
-      timer: 0
+      timer: 0,
+      isKeydown: false
     };
   },
   componentDidMount: function(){
@@ -59,9 +60,11 @@ var App = React.createClass({
       }
     }
     else{
-      if (!this.state.sweeper.game.started) return;
+      if (!this.state.sweeper.game.started)
+        return;
       sweeper.toggleFlag(y, x);
-      this.setState({sweeper: sweeper, isFlag: false});
+      var isFlag = this.state.isFlag && this.state.isKeydown;
+      this.setState({sweeper: sweeper, isFlag: isFlag});
     }
   },
   onFlagClick: function(e){
@@ -72,12 +75,12 @@ var App = React.createClass({
   handleKeyUp: function(e){
     if (e.keyCode != 16) return;
     e.preventDefault();
-    this.setState({isFlag: false});
+    this.setState({isFlag: false, isKeydown: false});
   },
   handleKeyDown: function(e){
     if (e.keyCode != 16) return;
     e.preventDefault();
-    this.setState({isFlag: true});
+    this.setState({isFlag: true, isKeydown: true});
   },
   render: function() {
     // console.log('sweeper', this.state.sweeper);
