@@ -1,15 +1,25 @@
+# basics
+ - click or touch square to uncover
+ - shift+click on a keyboard to place a flag
+ - click/tough top left flag count to toggle flag placement on next click
+ - game is won when all squares not containing bombs are uncovered
+ - game is lost if bomb is clicked
+ - flags are only for convenience and do not affect game result
+
 # todo
+ - [ ] change alerts to modals
+ - [ ] style review
+ - [ ] settings modal
+
+# completed
  - [x] make it so click 0 opens a bunch of squares
  - [x] make sure 1st click isnt bomb (create board after)
  - [x] see if you won/lost on click
  - [x] timer
  - [x] flags
  - [x] responsive
- - [ ] change alerts to modals
- - [ ] style review
- - [ ] settings modal
 
-# rules architecture (sweeper API)
+# rules outline (sweeper API)
 ## Public
  - [x] startGame(y, x, numOfBombs)
    - [x] resetBoard - createBoard
@@ -26,7 +36,7 @@
    - [x] where undefined are hidden
    - [x] values are stored as int
    - [x] 0 shows uncovered
- - placeFlag(y, x)
+ - [x] toggleFlag(y, x)
    - check if hidden (undefined)
    - else add flag (array or -1)
  - [x] resetBoard(height, width)
