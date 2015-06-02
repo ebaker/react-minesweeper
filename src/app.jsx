@@ -1,6 +1,7 @@
 var Sweeper = require('./sweeper');
 var React = require('react');
 
+// overall app component
 var App = React.createClass({
   getInitialState: function() {
     var sweeper = new Sweeper(12, 10, 5);
@@ -68,32 +69,40 @@ var App = React.createClass({
     }
   },
   onFlagClick: function(e){
-    console.log('flag', e);
     var toggle = !this.state.isFlag;
     this.setState({isFlag: toggle});
   },
   handleKeyUp: function(e){
+
+    // shift (16) toggle flag
     if (e.keyCode != 16) return;
     e.preventDefault();
     this.setState({isFlag: false, isKeydown: false});
   },
   handleKeyDown: function(e){
+
+    // shift (16) toggle flag
     if (e.keyCode != 16) return;
     e.preventDefault();
     this.setState({isFlag: true, isKeydown: true});
   },
   render: function() {
-    // console.log('sweeper', this.state.sweeper);
+
+    // reset game smiley or sad face
     var icon = <i className='icon-emo-happy' />;
     if (this.state.sweeper.game.ended){
       if (this.state.sweeper.game.status === 'lost'){
         icon = <i className='icon-emo-unhappy' />;
       }
     }
+    
+    // if bombs in top left clicked, toggle flag state
     var flagsClassName = 'bombs';
     if (this.state.isFlag){
       flagsClassName = flagsClassName + ' active';
     }
+ 
+    // controls set here, using Board component
     return (
       <div>
         <h1>Minesweeper</h1>
@@ -113,6 +122,7 @@ var App = React.createClass({
   }
 });
 
+// Board component 
 var Board = React.createClass({
   render: function() {
     var y, board = [];
@@ -131,6 +141,7 @@ var Board = React.createClass({
   }
 });
 
+// Row in a Board
 var Row = React.createClass({
   render: function(){
     var x, row = [];
@@ -149,12 +160,15 @@ var Row = React.createClass({
   }
 });
 
+// Square on the board
 var Square = React.createClass({
   handleClick: function(e){
     this.props.squareCallback(this.props.y, this.props.x);
   },
   render: function(){
     var key = this.props.y+'_'+this.props.x;
+
+    // basic empty square setup as default
     var square = (
       <div 
         key={key} 
@@ -164,18 +178,28 @@ var Square = React.createClass({
         onClick={this.handleClick}
       />
     );
+
+    // square uncoverd, display based on value
     if (this.props.value != undefined){
+
+      // ignore 0 or -1 value
       var value = this.props.value > 0 ? this.props.value : '';
       var className = 'square _' + value;
       var inner = value;
+
+      // display bomb
       if (this.props.value === '*'){
         className = className + ' bomb';
         inner = <i className='icon-bomb' />
       }
+
+      // display flag indicated by -1
       else if (this.props.value === -1){
         className = className + ' flag';
         inner = <i className='icon-flag' />
       }
+
+      // set square inner based on conditions above
       square = (
         <div key={key} className={className} onClick={this.handleClick}>
           {inner}
@@ -186,8 +210,9 @@ var Square = React.createClass({
   }
 });
 
+// mobile click support
 var attachFastClick = require('fastclick');
 attachFastClick(document.body);
-
 React.initializeTouchEvents(true);
+
 React.render(<App />, document.body);
