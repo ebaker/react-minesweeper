@@ -3,7 +3,6 @@ var React = require('react');
 
 var App = React.createClass({
   getInitialState: function() {
-    console.log('test');
     var sweeper = new Sweeper(12, 10, 5);
     sweeper.resetBoard();
     return {
