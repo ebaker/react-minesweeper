@@ -10,6 +10,7 @@ var stylus = require('gulp-stylus');  // To compile Stylus CSS.
 var nodemon = require('gulp-nodemon');
 var nib = require('nib');
 var fontello = require('gulp-fontello');
+var connect = require('gulp-connect');
  
 // Define some paths.
 var paths = {
@@ -64,6 +65,14 @@ gulp.task('watch', function() {
   gulp.watch(paths.fontello, ['fontello']);
   gulp.watch(paths.js, ['js']);
   gulp.watch(paths.app_js, ['js']);
+});
+
+gulp.task('serve', ['build', 'watch'], function(){
+  connect.server({
+    port: 3000,
+    root: paths.dest,
+    livereload: true
+  });
 });
  
 gulp.task('start', function () {

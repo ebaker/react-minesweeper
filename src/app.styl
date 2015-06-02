@@ -1,9 +1,13 @@
 body
   font-family sans-serif
+  text-align center
+  margin 0
   > div
     display inline-block
+  h1
+    margin 16px 0
 
-$square_px = 25px
+$square_px = 32px
 $empty_square_bg = #bbb
 $visible_square_bg = #f8f8f8
 $flag_bg = yellow
@@ -14,21 +18,26 @@ $counter_red = red
 
 .controls
   display block
-  margin-bottom 10px
+  margin-bottom 20px
   position relative
   text-align center
   > .bombs, >.timer
     background black
     box-sizing border-box
+    border 5px solid black
+    border-radius 6px
     color $counter_red
     display inline-block
     font-size 32px
-    padding 2px 4px
+    padding 0px 4px
     position absolute
+    width 80px
     &.bombs
       left 0
     &.timer
       right 0
+    &.active
+      border 5px solid yellow
   > .new
     background $btn_bg
     border 1px solid black
@@ -87,3 +96,4 @@ $bomb_bg = pink
         color $three_color
       &._4
         color $four_color
+
