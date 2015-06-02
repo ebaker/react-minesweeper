@@ -10,6 +10,7 @@
  - [ ] change alerts to modals
  - [ ] style review
  - [ ] settings modal
+ - [ ] more test edge cases
 
 # completed
  - [x] make it so click 0 opens a bunch of squares
