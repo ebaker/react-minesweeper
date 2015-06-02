@@ -3,7 +3,8 @@ var React = require('react');
 
 var App = React.createClass({
   getInitialState: function() {
-    var sweeper = new Sweeper();
+    console.log('test');
+    var sweeper = new Sweeper(12, 10, 5);
     sweeper.resetBoard();
     return {
       sweeper: sweeper,
@@ -186,4 +187,8 @@ var Square = React.createClass({
   }
 });
 
+var attachFastClick = require('fastclick');
+attachFastClick(document.body);
+
+React.initializeTouchEvents(true);
 React.render(<App />, document.body);
