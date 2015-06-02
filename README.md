@@ -4,10 +4,10 @@
  - [x] see if you won/lost on click
  - [x] timer
  - [x] flags
- - [ ] responsive
+ - [x] responsive
  - [ ] change alerts to modals
- - [ ] add settings modal
  - [ ] style review
+ - [ ] settings modal
 
 # rules architecture (sweeper API)
 ## Public
