@@ -1,5 +1,6 @@
 var Sweeper = require('./sweeper');
 var React = require('react');
+var ReactDOM = require('react-dom');
 
 // overall app component
 var App = React.createClass({
@@ -213,6 +214,5 @@ var Square = React.createClass({
 // mobile click support
 var attachFastClick = require('fastclick');
 attachFastClick(document.body);
-React.initializeTouchEvents(true);
 
-React.render(<App />, document.body);
+ReactDOM.render(<App />, document.getElementById('app'));
