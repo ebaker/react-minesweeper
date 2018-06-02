@@ -32,6 +32,7 @@ runs node mocha tests stored in `<project>/test/mocha`
 $ git clone git@github.com:ebaker/react-minesweeper.git
 $ npm i
 $ npm run build
+$ cp -r build <destination-http-public-dir>
 ```
 
 creates css, jsx, and dependencies build and outputs to `<project>/build` directory
