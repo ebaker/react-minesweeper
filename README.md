@@ -16,6 +16,15 @@ $ npm start
 
 begins gulp in watch mode, rebuilding files on changes. `connect` HTTP serves build on localhost port 3000.
 
+# test
+
+```
+$ cd react-minesweeper
+$ npm i
+$ npm test
+```
+
+runs node mocha tests stored in `<project>/test/mocha`
 
 # deployment
 
