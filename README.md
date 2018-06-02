@@ -1,10 +1,24 @@
-# basics
+# playing basics
  - click or touch square to uncover
  - shift+click on a keyboard to place a flag
  - click/tough top left flag count to toggle flag placement on next click
  - game is won when all squares not containing bombs are uncovered
  - game is lost if bomb is clicked
  - flags are only for convenience and do not affect game result
+ 
+# Developing
+
+## gulp
+
+default task begins gulp in watch mode, rebuilding files on change
+
+## gulp serve
+
+begins gulp in watch mode, rebuilding files on changes. `connect` HTTP serves build on localhost port 3000.
+
+## gulp build
+
+creates css, jsx, and dependencies build and outputs to `<project>/build` directory
 
 # todo
  - [ ] change alerts to modals
