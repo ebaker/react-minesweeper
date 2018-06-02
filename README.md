@@ -9,7 +9,7 @@
 # development
 
 ```
-$ git clone https://github.com/ebaker/react-minesweeper.git
+$ git clone git@github.com:ebaker/react-minesweeper.git
 $ npm i
 $ npm start
 ```
@@ -17,9 +17,11 @@ $ npm start
 begins gulp in watch mode, rebuilding files on changes. `connect` HTTP serves build on localhost port 3000.
 
 
-# production
+# deployment
 
 ```
+$ git clone git@github.com:ebaker/react-minesweeper.git
+$ npm i
 $ npm run build
 ```
 
