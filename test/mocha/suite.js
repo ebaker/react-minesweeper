@@ -1,9 +1,9 @@
 // mocha/suite.js
 
-var Sweeper;
-var boilerplate;
+let Sweeper;
+let boilerplate;
 
-var assert;
+let assert;
 
 if (typeof require == 'function') {
 
@@ -12,11 +12,11 @@ if (typeof require == 'function') {
   assert =  require('assert');
 }
 
-var sweeper;
+let sweeper;
 
 describe('sweeper', () => {
 
-  before(function(){
+  before(() => {
     sweeper = new Sweeper();
   });
 
@@ -26,7 +26,7 @@ describe('sweeper', () => {
 
   it('should reset board', () => {
     sweeper.resetBoard(2, 2);
-    var empty2x2 = [[undefined, undefined], [undefined, undefined]];
+    let empty2x2 = [[undefined, undefined], [undefined, undefined]];
 
     assert.deepEqual(sweeper.board, empty2x2, '2x2 board not reset');
     sweeper.resetBoard();
@@ -37,7 +37,7 @@ describe('sweeper', () => {
     const generated = sweeper.genRandSquares([0,0], 2);
     const max = sweeper.height * sweeper.width;
  
-    generated.map(function(square){
+    generated.map((square) => {
       assert.equal(square > -1, true, 'square less than 0');
       assert.equal(square != 0, true, 'excluded square selected');
       assert.equal(square < max, true, 'square greater than max');
