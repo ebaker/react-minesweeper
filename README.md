@@ -6,17 +6,22 @@
  - game is lost if bomb is clicked
  - flags are only for convenience and do not affect game result
  
-# Developing
+# development
 
-## gulp
-
-default task begins gulp in watch mode, rebuilding files on change
-
-## gulp serve
+```
+$ git clone https://github.com/ebaker/react-minesweeper.git
+$ npm i
+$ npm start
+```
 
 begins gulp in watch mode, rebuilding files on changes. `connect` HTTP serves build on localhost port 3000.
 
-## gulp build
+
+# production
+
+```
+$ npm run build
+```
 
 creates css, jsx, and dependencies build and outputs to `<project>/build` directory
 
